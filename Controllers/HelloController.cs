@@ -18,7 +18,7 @@ namespace HelloLih.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            string html = "<h1>" + "Hello World!" + "<h1>";
+            string html = "<h1>" + "Hello Lih!" + "<h1>";
             return Content(html, "text/html");
         }
     }
