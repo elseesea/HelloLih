@@ -6,26 +6,29 @@ using System.Threading.Tasks;
 
 namespace HelloLih.Controllers
 {
+    // The following Route attribute designates that all methods in this class will respond at /helloworld.
+    // See Ch. 10.4.2.1
+    [Route("/helloworld")]
     public class HelloController : Controller
     {
 
         // GET: /<controller>/
-        // Example from Ch. 10.3.2
+        // Removed method Route attribute. See Ch. 10.4.2.1
         [HttpGet]
-        [Route("/helloworld")]
         public IActionResult Index()
         {
-            string html = "<form method='post' action='/helloworld'>" +
+            string html = "<form method='post' action='/helloworld/welcome'>" +
                "<input type='text' name='name' />" +
                "<input type='submit' value='Greet Me!' />" +
                "</form>";
 
             return Content(html, "text/html");
         }
-        
-        // Example from Ch. 10.3.2
-        [HttpPost]
-        [Route("/helloworld")]
+
+        // 1. Added ability to respond to Get requests. See Ch. 10.4.2.2
+        // 2. Combined Request attribute and Route attribute for both Get & Post requests. See Ch. 10.4.2.2
+        [HttpGet("welcome/{name?}")]
+        [HttpPost("welcome")]
         public IActionResult Welcome(string name = "World")
         {
             return Content("<h1> Welcome to my app, " + name + "! </ h1 > ", "text / html");
