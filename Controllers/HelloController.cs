@@ -8,27 +8,30 @@ namespace HelloLih.Controllers
 {
     public class HelloController : Controller
     {
-        /*
-        public IActionResult Index()
-        {
-            return View();
-        }
-        */
 
         // GET: /<controller>/
+        // Example from Ch. 10.3.2
+        [HttpGet]
+        [Route("/helloworld")]
         public IActionResult Index()
         {
-            string html = "<h1>" + "Hello Lih!" + "<h1>";
+            string html = "<form method='post' action='/helloworld'>" +
+               "<input type='text' name='name' />" +
+               "<input type='submit' value='Greet Me!' />" +
+               "</form>";
+
             return Content(html, "text/html");
         }
-
-        [HttpGet]
-        [Route("/helloworld/welcome/{name?}")]
+        
+        // Example from Ch. 10.3.2
+        [HttpPost]
+        [Route("/helloworld")]
         public IActionResult Welcome(string name = "World")
         {
             return Content("<h1> Welcome to my app, " + name + "! </ h1 > ", "text / html");
         }
 
+        // Personal variation of example from Ch. 10.2
         [HttpGet]
         [Route("/anyroute/goaway/{name?}")]
         public IActionResult GoAway(string name = "World")
@@ -36,5 +39,5 @@ namespace HelloLih.Controllers
             return Content("<h1> Please go away, " + name + "! </ h1 > ", "text / html");
         }
 
-    }
-}
+    } // class
+} // namespace
