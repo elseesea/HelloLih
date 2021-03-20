@@ -13,33 +13,59 @@ namespace HelloLih.Controllers
     {
 
         // GET: /<controller>/
-        // Removed method Route attribute. See Ch. 10.4.2.1
         [HttpGet]
         public IActionResult Index()
         {
-            string html = "<form method='post' action='/helloworld/welcome'>" +
-               "<input type='text' name='name' />" +
-               "<input type='submit' value='Greet Me!' />" +
-               "</form>";
+            string html = "<form method='post' action='/helloworld/welcome'>" + 
+                "<input type='text' name='name' id='name'" +
+                "<label for='language'></label>" +
+                "<select name = 'language' id = 'language'>" +
+                "<option value = 'English'>English</option>" +
+                "<option value = 'German'>German</option>" +
+                "<option value = 'Italian'>Italian</option>" +
+                "<option value = 'Spanish'>Spanish</option>" +
+                "<option value = 'French'>French</option>" +
+                "</select>" +
+                "<input type='submit' value='Greet Me!' />" +
+                "</form>";
 
             return Content(html, "text/html");
         }
 
-        // 1. Added ability to respond to Get requests. See Ch. 10.4.2.2
-        // 2. Combined Request attribute and Route attribute for both Get & Post requests. See Ch. 10.4.2.2
-        [HttpGet("welcome/{name?}")]
         [HttpPost("welcome")]
-        public IActionResult Welcome(string name = "World")
+        public IActionResult Welcome(string name = "World", string language = "English")
         {
-            return Content("<h1> Welcome to my app, " + name + "! </ h1 > ", "text / html");
+            string selectedLanguage = language;
+            string greeting = CreateMessage(name, language);
+            return Content("<h1>" + greeting + "</h1>", "text / html");
         }
 
-        // Personal variation of example from Ch. 10.2
-        [HttpGet]
-        [Route("/anyroute/goaway/{name?}")]
-        public IActionResult GoAway(string name = "World")
+        public static string CreateMessage(string name, string language)
         {
-            return Content("<h1> Please go away, " + name + "! </ h1 > ", "text / html");
+            string languageGreeting = "Hello";
+
+            if (language.Equals("French"))
+            {
+                languageGreeting = "Bonjour";
+            }
+            else if (language.Equals("Spanish"))
+            {
+                languageGreeting = "Hola";
+            }
+            else if (language.Equals("Italian"))
+            {
+                languageGreeting = "Ciao";
+            }
+            else if (language.Equals("German"))
+            {
+                languageGreeting = "Hallo";
+            }
+            else
+            {
+                languageGreeting = "Hello";
+            }
+
+            return languageGreeting + " " + name;
         }
 
     } // class
